@@ -6,10 +6,13 @@ namespace CreatingTypes
 {
     using System;
     using System.Collections.Generic;
+    using System.Security.Cryptography;
     using System.Text;
 
     public class Solution
     {
+        private static Random rand = new Random();
+
         public double FindNthRoot(double a, double n, double accuracy)
         {
             if (n < 0 || accuracy < 0 || (a < 0 && n % 2 == 0))
@@ -17,18 +20,20 @@ namespace CreatingTypes
                 throw new ArgumentOutOfRangeException();
             }
 
-            double prediction = accuracy;
-            double eps = Math.Min(1e-6, accuracy);
-
-            while (true)
+            double prediction = rand.NextDouble();
+            var diff = 1.0;
+            do
             {
-                if (Math.Abs(a - Math.Pow(prediction, n)) <= eps)
+                /*if (Math.Abs(a - Math.Pow(prediction, n)) <= eps)
                 {
                     break;
-                }
+                }*/
 
-                prediction = ((prediction * (n - 1)) + (a / Math.Pow(prediction, n - 1))) / n;
+                var newPrediction = ((prediction * (n - 1)) + (a / Math.Pow(prediction, n - 1))) / n;
+                diff = Math.Abs(newPrediction - prediction);
+                prediction = newPrediction;
             }
+            while (diff >= accuracy);
 
             return prediction;
         }

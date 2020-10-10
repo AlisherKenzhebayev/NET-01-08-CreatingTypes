@@ -30,10 +30,10 @@ namespace CreatingTypes
         [TestCase(0.0081, 4, 0.1, 0.3)]
         [TestCase(-0.008, 3, 0.1, -0.2)]
         [TestCase(0.004241979, 9, 0.00000001, 0.545)]
-        public void FindNthRoot_ReturnDouble(double a, double n, double accuracy, double result)
+        public void FindNthRoot_ReturnDouble(double a, double n, double accuracy, double expected)
         {
             var retval = this.solution.FindNthRoot(a, n, accuracy);
-            Assert.AreEqual(retval, result, 1e-4);
+            Assert.AreEqual(expected, retval, accuracy);
         }
 
         [TestCase(-0.01, 2, 0.0001)]
